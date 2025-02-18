@@ -21,12 +21,17 @@ const Login = () => {
   const {
     control,
     formState: { errors, isValid },
+    handleSubmit,
   } = useForm<IFormLogin>({
     resolver: yupResolver(schema),
     mode: "onBlur",
     defaultValues,
     reValidateMode: "onChange",
   });
+  
+  const onSubmit = (data: IFormLogin) => {
+    console.log("Dados enviados:", data);
+  };
 
   return (
     <Container>
@@ -49,7 +54,11 @@ const Login = () => {
             errorMessage={errors?.password?.message}
           />
           <Spacing />
-          <Button title="Entrar" />
+          <Button 
+            title="Entrar" 
+            onClick={handleSubmit(onSubmit)} 
+            style={{ pointerEvents: !isValid ? "none" : "auto", opacity: !isValid ? 0.5 : 1 }} 
+          />
         </Column>
       </LoginContainer>
     </Container>
